@@ -4,7 +4,7 @@ This is another weather module for MagicMirror. It is based somewhat around http
 The app uses data from the currently-free source of openweathermap.org, using their one-call API - https://openweathermap.org/api/one-call-api. 
 
 ## Screenshot
-|![Example: Default layout](OneCallWeather-screenshot.png)<br>*Typical view of weather*
+|![Example: Default layout](OneCallWeather-Screenshot.png)<br>*Typical view of weather*
 
 ## Installation
 In your terminal, go to your MagicMirror's Module folder:
