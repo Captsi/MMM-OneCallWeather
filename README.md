@@ -27,7 +27,7 @@ The icons are free to use for Non-Commercial use and can be found at icons DA pa
 
 Note:  You can use any of your own icons but you will have to rename them to the weather items shown on openweather. There are only 9 types of weather that the API currently shows (2021) and they are shown on https://openweathermap.org/weather-conditions. With some different icons for day and night you should have 18 icons in each folder, some of which will just be copies.
 
-This module displays the weather forecast for the coming week, including an an icon to display the current conditions, the minimum temperature and the maximum temperature.
+This module displays the weather forecast for the coming week, including an an icon to display the current conditions, the minimum temperature and the maximum temperature. The software is designed around a display in Celsius and miles per hour, but should work in a multitude of units. I found that the openweathermap information is a bit crude in that you cant have Farenheight and metres per second, or celsius and miles per hour, hence this code. Its a bit clunky. 
 
 ## Using the module
 To use this module, add it to the modules array in the `config/config.js` file:
