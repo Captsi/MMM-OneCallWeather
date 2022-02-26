@@ -14,8 +14,14 @@ cd ~/MagicMirror/modules
 ```
 Clone this repository:
 ```
-git clone https://github.com/Captsi/MMM-OneCallWeather.git
+git clone https://github.com/Captsi/MMM-OneCallWeather
 ```
+Install the dependencies
+```
+cd MMM-OneCallWeather
+npm install
+```
+
 Go to https://openweathermap.org/api and subscribe to One Call API. Its free to set up an account, and the free subscription level is fine for this app. The API returns a lot of information and can return 1000 calls a day on the free subscription level (approx once every 2 minutes maximum). The API is good as it uses their algorithms to give ultra local weather reports, even if you don't live in a named location, which some other apps suffer with.
 
 Go to https://www.latlong.net/ and figure out where you want the forecast for. There are plenty of ways of figuring out your location, and you just need a decimal format of your position. 52N 010W becomes 52.0 -10.0 on the two lines in your config.
