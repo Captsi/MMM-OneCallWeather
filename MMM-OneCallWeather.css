@@ -73,7 +73,7 @@
 }
 
 .wi-showers:before{
-	content: url("/css/icon/9.png"):
+	content: url("/css/icon/9.png");
 }
 
 .OneCallWeather .wi-showers:before{
@@ -235,10 +235,10 @@
 .OneCallWeather .wi-day-sunny:before {
 	content: "";
 	height:60px;
-	width:87.5px;*/
+	width:87.5px;
 	display: block; 
 	background-image : url("/css/icon/36.png");
-	background-size: 87.5px 60px;*/
+	background-size: 87.5px 60px;
 }
 
 .wi-night-cloudy:before {
@@ -266,4 +266,3 @@
 	background-image : url("/css/icon/45.png");
 	background-size: 87.5px 60px;
 }
-
