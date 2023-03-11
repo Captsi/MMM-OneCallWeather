@@ -20,9 +20,8 @@
 ******************************** */
 
 const NodeHelper = require("node_helper");
-// var needle = require("needle");
+const Log = require("logger");
 const moment = require("moment");
-// var request = require('request')
 const axios = require("axios").default;
 
 module.exports = NodeHelper.create({
@@ -33,20 +32,20 @@ module.exports = NodeHelper.create({
   socketNotificationReceived(notification, payload) {
     if (notification === "OPENWEATHER_ONECALL_GET") {
       const self = this;
-      console.log("node received");
-      if (payload.apikey == null || payload.apikey == "") {
-        console.log(
+      Log.log("node received");
+      if (payload.apikey == null || payload.apikey === "") {
+        Log.log(
           `[MMM-OneCallWeather] ${moment().format(
             "D-MMM-YY HH:mm"
           )} ** ERROR ** No API key configured. Get an API key at https://openweathermap.org/api/one-call-api`
         );
       } else if (
         payload.latitude == null ||
-        payload.latitude == "" ||
+        payload.latitude === "" ||
         payload.longitude == null ||
-        payload.longitude == ""
+        payload.longitude === ""
       ) {
-        console.log(
+        Log.log(
           `[MMM-OneCallWeather] ${moment().format(
             "D-MMM-YY HH:mm"
           )} ** ERROR ** Latitude and/or longitude not provided.`
@@ -64,7 +63,7 @@ module.exports = NodeHelper.create({
 
         axios
           .get(myurl)
-          .then(function (response) {
+          .then(function handleData(response) {
             // handle success
             //          console.log("got request loop " + myurl);    		// uncomment to see in terminal
             response.data.instanceId = payload.instanceId;
@@ -74,25 +73,13 @@ module.exports = NodeHelper.create({
             );
             //          console.log("sent the data back" );
           })
-          .catch(function (error) {
+          .catch(function handleError(error) {
             // handle error
-            console.log(
+            Log.log(
               `[MMM-OneCallWeather] ${moment().format(
                 "D-MMM-YY HH:mm"
               )} ** ERROR ** ${error}`
             );
-            /*             
-                  request(options, function (error, response, body) {
-                    console.log("got request loop" );    		// uncomment to see in terminal
-  
-                    if (!error) {
-                      var result = JSON.parse(body)
-//                      console.log("got some data" + response.statusCode + result);    		// uncomment to see in terminal
-//                      console.log("this is url" + myurl);    		// uncomment to see in terminal
-                      self.sendSocketNotification("OPENWEATHER_ONE_CALL_FORECAST_DATA", result);
-//                      console.log("[MMM-OneCallWeather] Getting data: " + options);
-                    }
-                  */
           });
       }
     }

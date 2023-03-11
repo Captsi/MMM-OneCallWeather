@@ -1,3 +1,5 @@
+/* global moment */
+
 /* MagicMirror²
  * Module: MMM-OneCallWeather
  *
@@ -9,6 +11,7 @@
  * Currently this is focused on the information which is necessary for the current weather.
  * As soon as we start implementing the forecast, mode properties will be added.
  */
+// eslint-disable-next-line no-unused-vars
 class WeatherObject {
   constructor(units, tempUnits, windUnits, useKmh) {
     this.units = units;
@@ -29,22 +32,6 @@ class WeatherObject {
     this.snow = null;
     this.precipitation = null;
     this.feelsLikeTemp = null;
-  }
-
-  beaufortWindSpeed() {
-    const windInKmh =
-      this.windUnits === "imperial"
-        ? this.windSpeed * 1.609344
-        : this.useKmh
-        ? this.windSpeed
-        : (this.windSpeed * 60 * 60) / 1000;
-    const speeds = [1, 5, 11, 19, 28, 38, 49, 61, 74, 88, 102, 117, 1000];
-    for (const [index, speed] of speeds.entries()) {
-      if (speed > windInKmh) {
-        return index;
-      }
-    }
-    return 12;
   }
 
   kmhWindSpeed() {
