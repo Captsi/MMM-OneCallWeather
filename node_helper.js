@@ -1,4 +1,4 @@
-/*********************************
+/** *******************************
 
   Node Helper for MMM-OneCallWeather.
 
@@ -17,28 +17,28 @@
 
     https://api.openweathermap.org/data/2.5/onecall?lat=LATITUDE&lon=LONGITUDE&units=XXX&lang=YY&appid=API_KEY
 
-*********************************/
+******************************** */
 
-var NodeHelper = require("node_helper");
+const NodeHelper = require("node_helper");
 // var needle = require("needle");
-var moment = require("moment");
+const moment = require("moment");
 // var request = require('request')
-var axios = require("axios").default;
+const axios = require("axios").default;
 
 module.exports = NodeHelper.create({
-  start: function () {
+  start() {
     //    console.log("====================== Starting node_helper for module [" + this.name + "]");
   },
 
-  socketNotificationReceived: function (notification, payload) {
+  socketNotificationReceived(notification, payload) {
     if (notification === "OPENWEATHER_ONECALL_GET") {
-      var self = this;
+      const self = this;
       console.log("node received");
       if (payload.apikey == null || payload.apikey == "") {
         console.log(
-          "[MMM-OneCallWeather] " +
-            moment().format("D-MMM-YY HH:mm") +
-            " ** ERROR ** No API key configured. Get an API key at https://openweathermap.org/api/one-call-api"
+          `[MMM-OneCallWeather] ${moment().format(
+            "D-MMM-YY HH:mm"
+          )} ** ERROR ** No API key configured. Get an API key at https://openweathermap.org/api/one-call-api`
         );
       } else if (
         payload.latitude == null ||
@@ -47,26 +47,20 @@ module.exports = NodeHelper.create({
         payload.longitude == ""
       ) {
         console.log(
-          "[MMM-OneCallWeather] " +
-            moment().format("D-MMM-YY HH:mm") +
-            " ** ERROR ** Latitude and/or longitude not provided."
+          `[MMM-OneCallWeather] ${moment().format(
+            "D-MMM-YY HH:mm"
+          )} ** ERROR ** Latitude and/or longitude not provided.`
         );
       } else {
-        var myurl =
-          "https://api.openweathermap.org/data/2.5/onecall" +
-          "?lat=" +
-          payload.latitude +
-          "&lon=" +
-          payload.longitude +
-          (payload.units !== "" ? "&units=" + payload.units : "") +
-          "&exclude" +
-          payload.exclude +
-          "&appid=" +
-          payload.apikey +
-          "&lang=" +
-          payload.language;
+        const myurl =
+          `https://api.openweathermap.org/data/2.5/onecall` +
+          `?lat=${payload.latitude}&lon=${payload.longitude}${
+            payload.units !== "" ? `&units=${payload.units}` : ""
+          }&exclude${payload.exclude}&appid=${payload.apikey}&lang=${
+            payload.language
+          }`;
 
-        //make request to OpenWeather onecall API
+        // make request to OpenWeather onecall API
 
         axios
           .get(myurl)
@@ -83,10 +77,9 @@ module.exports = NodeHelper.create({
           .catch(function (error) {
             // handle error
             console.log(
-              "[MMM-OneCallWeather] " +
-                moment().format("D-MMM-YY HH:mm") +
-                " ** ERROR ** " +
-                error
+              `[MMM-OneCallWeather] ${moment().format(
+                "D-MMM-YY HH:mm"
+              )} ** ERROR ** ${error}`
             );
             /*             
                   request(options, function (error, response, body) {

@@ -3,9 +3,9 @@
     <title>Icon Preview</title>
     <style>
       body {
-        color: #FFFFFF;
+        color: #ffffff;
         background-color: #000000;
-        font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
         margin: 0;
         padding: 0;
       }
@@ -26,13 +26,10 @@
         font-style: normal;
         font-size: 20px;
       }
-
-
     </style>
   </head>
   <body>
     <script language="javascript">
-
       var iconSets = [
         "1c",
         "1m",
@@ -72,12 +69,11 @@
         for (var j = 0; j < icons.length; j++) {
           var icon = document.createElement("img");
           icon.src = iconSets[i] + "/" + icons[j] + ".svg";
-          iconSet.appendChild(icon)
+          iconSet.appendChild(icon);
         }
 
         document.body.appendChild(iconSet);
       }
-
     </script>
   </body>
-</html> 
+</html>

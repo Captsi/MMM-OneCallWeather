@@ -75,8 +75,8 @@ class WeatherObject {
       feelsLike = Math.round(
         35.74 +
           0.6215 * tempInF -
-          35.75 * Math.pow(windInMph, 0.16) +
-          0.4275 * tempInF * Math.pow(windInMph, 0.16)
+          35.75 * windInMph ** 0.16 +
+          0.4275 * tempInF * windInMph ** 0.16
       );
     } else if (tempInF > 80 && this.humidity > 40) {
       feelsLike =
@@ -84,16 +84,11 @@ class WeatherObject {
         2.04901523 * tempInF +
         10.14333127 * this.humidity -
         0.22475541 * tempInF * this.humidity -
-        6.83783 * Math.pow(10, -3) * tempInF * tempInF -
-        5.481717 * Math.pow(10, -2) * this.humidity * this.humidity +
-        1.22874 * Math.pow(10, -3) * tempInF * tempInF * this.humidity +
-        8.5282 * Math.pow(10, -4) * tempInF * this.humidity * this.humidity -
-        1.99 *
-          Math.pow(10, -6) *
-          tempInF *
-          tempInF *
-          this.humidity *
-          this.humidity;
+        6.83783 * 10 ** -3 * tempInF * tempInF -
+        5.481717 * 10 ** -2 * this.humidity * this.humidity +
+        1.22874 * 10 ** -3 * tempInF * tempInF * this.humidity +
+        8.5282 * 10 ** -4 * tempInF * this.humidity * this.humidity -
+        1.99 * 10 ** -6 * tempInF * tempInF * this.humidity * this.humidity;
     }
 
     return this.tempUnits === "imperial"
