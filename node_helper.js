@@ -29,21 +29,21 @@ module.exports = NodeHelper.create({
     //    console.log("====================== Starting node_helper for module [" + this.name + "]");
   },
 
-  socketNotificationReceived(notification, payload) {
+  socketNotificationReceived(notification, config) {
     if (notification === "OPENWEATHER_ONECALL_GET") {
       const self = this;
       Log.log("node received");
-      if (payload.apikey == null || payload.apikey === "") {
+      if (config.apikey == null || config.apikey === "") {
         Log.log(
           `[MMM-OneCallWeather] ${moment().format(
             "D-MMM-YY HH:mm"
           )} ** ERROR ** No API key configured. Get an API key at https://openweathermap.org/api/one-call-api`
         );
       } else if (
-        payload.latitude == null ||
-        payload.latitude === "" ||
-        payload.longitude == null ||
-        payload.longitude === ""
+        config.latitude == null ||
+        config.latitude === "" ||
+        config.longitude == null ||
+        config.longitude === ""
       ) {
         Log.log(
           `[MMM-OneCallWeather] ${moment().format(
@@ -52,11 +52,11 @@ module.exports = NodeHelper.create({
         );
       } else {
         const myurl =
-          `https://api.openweathermap.org/data/2.5/onecall` +
-          `?lat=${payload.latitude}&lon=${payload.longitude}${
-            payload.units !== "" ? `&units=${payload.units}` : ""
-          }&exclude${payload.exclude}&appid=${payload.apikey}&lang=${
-            payload.language
+          `https://api.openweathermap.org/data/${config.apiVersion}/onecall` +
+          `?lat=${config.latitude}&lon=${config.longitude}${
+            config.units !== "" ? `&units=${config.units}` : ""
+          }&exclude${config.exclude}&appid=${config.apikey}&lang=${
+            config.language
           }`;
 
         // make request to OpenWeather onecall API
@@ -66,7 +66,7 @@ module.exports = NodeHelper.create({
           .then(function handleData(response) {
             // handle success
             //          console.log("got request loop " + myurl);    		// uncomment to see in terminal
-            response.data.instanceId = payload.instanceId;
+            response.data.instanceId = config.instanceId;
             self.sendSocketNotification(
               "OPENWEATHER_ONECALL_DATA",
               response.data

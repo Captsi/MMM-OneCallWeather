@@ -138,6 +138,7 @@ Module.register("MMM-OneCallWeather", {
   updateWeather() {
     this.sendSocketNotification("OPENWEATHER_ONECALL_GET", {
       apikey: this.config.apikey,
+      apiVersion: this.config.apiVersion,
       exclude: this.config.exclude,
       latitude: this.config.latitude,
       longitude: this.config.longitude,
