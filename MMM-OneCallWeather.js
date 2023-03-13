@@ -18,62 +18,40 @@ Module.register("MMM-OneCallWeather", {
     latitude: false,
     longitude: false,
     apikey: "",
+    apiVersion: "3.0",
     units: config.units,
-    showDailyForecast: true,
     layout: "default", // default
     showRainAmount: false,
-    showPrecipitation: false,
     showWind: true,
     showWindDirection: true,
     showFeelsLike: true,
     tempUnits: "c",
     windunits: "mph",
     useBeaufortInCurrent: false,
-    useBeaufortInForecast: true,
 
     initialLoadDelay: 2500, // 2.5 seconds delay. This delay is used to keep the OpenWeather API happy.
-    retryDelay: 2500,
     updateInterval: 10 * 60 * 1000, // every 10 minutes
     animationSpeed: 1000,
     updateFadeSpeed: 500,
-    timeFormat: config.timeFormat,
     lang: config.language,
     language: config.language,
     requestDelay: 0,
 
     decimalSymbol: ".",
     fade: true,
-    fadePoint: 0.25, // Start on 1/4th of the list.
     scale: false,
     exclude: "minutely",
 
-    apiVersion: "2.5",
-    apiBase: "https://api.openweathermap.org/data/",
-    forecastEndpoint: "onecall",
-    calendarClass: "calendar",
     tableClass: "small",
     iconset: "4a",
     iconsetFormat: "png",
 
-    showCurrentConditions: true,
-    showExtraCurrentConditions: true,
     onlyTemp: false,
-    showSummary: true,
-    forecastHeaderText: "East Wittering",
-    showForecastTableColumnHeaderIcons: true,
-    showHourlyForecast: false,
-    hourlyForecastInterval: 3,
     maxHourliesToShow: 30,
-    includeTodayInDailyForecast: true,
     maxDailiesToShow: 6,
     colored: true,
     roundTemp: true,
 
-    label_maximum: "max",
-    label_high: "H",
-    label_low: "L",
-    label_timeFormat: "h a",
-    label_days: ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
     label_ordinals: [
       "N",
       "NNE",
@@ -94,9 +72,6 @@ Module.register("MMM-OneCallWeather", {
     ],
     moduleTimestampIdPrefix: "OPENWEATHER_ONE_CALL_TIMESTAMP_"
   },
-
-  validUnits: ["imperial", "metric", ""],
-  validLayouts: ["tiled", "table"],
 
   // create a variable for the first upcoming calendaar event. Used if no location is specified.
   firstEvent: false,
