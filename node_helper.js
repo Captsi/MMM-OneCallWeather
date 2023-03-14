@@ -55,7 +55,7 @@ module.exports = NodeHelper.create({
           `https://api.openweathermap.org/data/${config.apiVersion}/onecall` +
           `?lat=${config.latitude}&lon=${config.longitude}${
             config.units !== "" ? `&units=${config.units}` : ""
-          }&exclude${config.exclude}&appid=${config.apikey}&lang=${
+          }&exclude=${config.exclude}&appid=${config.apikey}&lang=${
             config.language
           }`;
 
