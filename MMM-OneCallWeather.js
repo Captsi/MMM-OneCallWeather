@@ -81,11 +81,6 @@ Module.register("MMM-OneCallWeather", {
     return ["moment.js", "weatherobject.js"];
   },
 
-  // Define required scripts.
-  getStyles() {
-    return ["MMM-OneCallWeather.css"]; // "weather-icons.css",
-  },
-
   // Define start sequence.
   start() {
     Log.info(`Starting module: ${this.name}`);
