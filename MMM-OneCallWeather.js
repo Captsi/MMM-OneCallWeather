@@ -119,7 +119,6 @@ Module.register("MMM-OneCallWeather", {
       longitude: this.config.longitude,
       units: this.config.units,
       language: this.config.language,
-      instanceId: this.identifier,
       requestDelay: this.config.requestDelay
     });
   },

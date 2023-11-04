@@ -16,7 +16,7 @@ Since the original author of the module, [Captsi](https://github.com/Captsi), is
 
 ## Installation
 
-In your terminal, go to your MagicMirror's Module folder:
+In your terminal, go to your MagicMirror's module folder:
 
 ```sh
 cd ~/MagicMirror/modules
@@ -28,7 +28,7 @@ Clone this repository:
 git clone https://github.com/KristjanESPERANTO/MMM-OneCallWeather
 ```
 
-Install the dependencies
+Install the dependencies:
 
 ```sh
 cd MMM-OneCallWeather
@@ -60,13 +60,13 @@ To use this module, add it to the modules array in the `config/config.js` file:
 modules: [
   {
     module: "MMM-OneCallWeather",
-    position: "top_right",    // This can be any of the regions.
+    position: "top_right", // This can be any of the regions.
     // Best results in bottom_bar region due to horizontal default layout and icon sizes.
     config: {
       // See 'Configuration options' for more information.
-      latitude: "51.500149",  // Longitude from https://www.latlong.net/
+      latitude: "51.500149", // Longitude from https://www.latlong.net/
       longitude: "-0.126240", // Longitude from https://www.latlong.net/ - is West + is East of London
-      apikey: "YOUR_API_KEY"  // openweathermap.org API key.
+      apikey: "YOUR_API_KEY" // openweathermap.org API key.
     }
   }
 ];
@@ -81,7 +81,7 @@ The following properties can be configured:
 | `latitude`                   | The latitude of the location used for weather information. <br><br> **Example:** `'51.500149'` <br> **Default value:** `false` <br><br> **Note:** When the Value is **REQUIRED**                                                                                                                                                                                                |
 | `longitude`                  | The longitude of the location used for weather information. <br> <br> **Example:** `-0.126240` <br><br> **Note:** - (minus sign) is West + (plus, or no minus sign) is East of the prime meridian in London. To find your location you can go to latlong.net, or use google maps. If no value is entered for either lat or long the module will not work. Value is **REQUIRED** |
 | `apikey`                     | The [OpenWeatherMap](https://home.openweathermap.org) API key, which can be obtained by creating an OpenWeatherMap account. <br><br> This value is **REQUIRED**                                                                                                                                                                                                                 |
-| `apiVersion`                 | The OpenWeatherMap API version to use. Change it to "2.5" if you have an old apikey<br><br> **Default value:** `3.0`                                                                                                                                                                                                                                                                                                        |
+| `apiVersion`                 | The OpenWeatherMap API version to use. Change it to "2.5" if you have an old apikey<br><br> **Default value:** `3.0`                                                                                                                                                                                                                                                            |
 | `units`                      | What units to use. Specified by config.js <br><br> **Possible values:** `config.units` = Specified by config.js, `default` = Kelvin, `metric` = Celsius, `imperial` =Fahrenheit <br> **Default value:** `config.units`                                                                                                                                                          |
 | `roundTemp`                  | Round temperature values to nearest integer. <br><br> **Possible values:** `true` (round to integer) or `false` (display exact value with decimal point) <br> **Default value:** `false`                                                                                                                                                                                        |
 | `layout`                     | Define whether layout should be horizontal or vertical. Specified by config.js <br><br> **Possible values:** `"horizontal"` , `"vertical"` or `"default"` <br> **Default value:** `"default"` <br> This value is optional. By default the weatherforecast module display in a hybrid format. The vertical option is OK too. Some work still needs to be done on pretty formats. |

@@ -22,7 +22,6 @@
 const NodeHelper = require("node_helper");
 const Log = require("logger");
 const moment = require("moment");
-const axios = require("axios").default;
 
 module.exports = NodeHelper.create({
   start() {
@@ -61,19 +60,20 @@ module.exports = NodeHelper.create({
 
         // make request to OpenWeather onecall API
 
-        axios
-          .get(myurl)
-          .then(function handleData(response) {
+        fetch(myurl)
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            }
+            throw new Error(response.statusText);
+          })
+          .then((data) => {
             // handle success
             //          console.log("got request loop " + myurl);    		// uncomment to see in terminal
-            response.data.instanceId = config.instanceId;
-            self.sendSocketNotification(
-              "OPENWEATHER_ONECALL_DATA",
-              response.data
-            );
+            self.sendSocketNotification("OPENWEATHER_ONECALL_DATA", data);
             //          console.log("sent the data back" );
           })
-          .catch(function handleError(error) {
+          .catch((error) => {
             // handle error
             Log.log(
               `[MMM-OneCallWeather] ${moment().format(
