@@ -1,6 +1,6 @@
 # MMM-OneCallWeather
 
-This is another weather module for [MagicMirror²](https://github.com/MichMich/MagicMirror). It is based somewhat around <https://github.com/jharttech/MMM-weatherforecast> and the default 'weather' app. This version has been edited to allow the days of the week to span left to right, each with its own weather icon and details.
+This is another weather module for [MagicMirror²](https://github.com/MagicMirrorOrg/MagicMirror). It is based somewhat around <https://github.com/jharttech/MMM-weatherforecast> and the default 'weather' app. This version has been edited to allow the days of the week to span left to right, each with its own weather icon and details.
 
 The app uses data from the currently-free source of openweathermap.org, using their one-call API - <https://openweathermap.org/api/one-call-api>.
 
@@ -100,7 +100,7 @@ The following properties can be configured:
 
 ## Special Thanks
 
-- [Michael Teeuw](https://github.com/MichMich) for creating the inspiring project [MagicMirror²](https://github.com/MichMich/MagicMirror).
+- [Michael Teeuw](https://github.com/MichMich) for creating the inspiring project [MagicMirror²](https://github.com/MagicMirrorOrg/MagicMirror).
 - [Captsi](https://github.com/Captsi) for initiating this module and maintaining it until 2021.
 - [Jason Hartgraves](https://github.com/jharttech) for creating the module [MMM-weatherforecast](https://github.com/jharttech/MMM-weatherforecast) on which a part of this module is based
 - The community of magicmirror.builders for help in the development process and all contributors for finding and fixing errors in this module.
