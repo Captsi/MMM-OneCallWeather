@@ -1,10 +1,5 @@
-/* eslint-disable prefer-destructuring */
-/* eslint-disable default-case */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-prototype-builtins */
-/* global Module Log config moment WeatherObject */
-
-/* MagicMirror²
+/*
+ * MagicMirror²
  * Module: MMM-OneCallWeather
  *
  * By Simon Cowdell
@@ -52,7 +47,7 @@ Module.register("MMM-OneCallWeather", {
     colored: true,
     roundTemp: true,
 
-    label_ordinals: [
+    labelOrdinals: [
       "N",
       "NNE",
       "NE",
@@ -77,12 +72,12 @@ Module.register("MMM-OneCallWeather", {
   firstEvent: false,
 
   // Define required scripts.
-  getScripts() {
+  getScripts () {
     return ["moment.js", "weatherobject.js"];
   },
 
   // Define start sequence.
-  start() {
+  start () {
     Log.info(`Starting module: ${this.name}`);
     // Set locale.
     moment.locale(config.language);
@@ -92,7 +87,7 @@ Module.register("MMM-OneCallWeather", {
     this.updateTimer = null;
   },
 
-  scheduleUpdate(delay) {
+  scheduleUpdate (delay) {
     let nextLoad = this.config.updateInterval;
     if (typeof delay !== "undefined" && delay >= 0) {
       nextLoad = delay;
@@ -100,12 +95,12 @@ Module.register("MMM-OneCallWeather", {
 
     const self = this;
     clearTimeout(this.updateTimer);
-    this.updateTimer = setTimeout(function update() {
+    this.updateTimer = setTimeout(() => {
       self.updateWeather();
     }, nextLoad);
   },
 
-  updateWeather() {
+  updateWeather () {
     this.sendSocketNotification("OPENWEATHER_ONECALL_GET", {
       apikey: this.config.apikey,
       apiVersion: this.config.apiVersion,
@@ -117,13 +112,12 @@ Module.register("MMM-OneCallWeather", {
       requestDelay: this.config.requestDelay
     });
   },
-  //           Log.log("node received");
+  // Log.log("node received");
 
-  socketNotificationReceived(notification, payload) {
-    //		Log.log("got some data back" );    		// uncomment to see in terminal
+  socketNotificationReceived (notification, payload) {
+    // Log.log("got some data back" );    // uncomment to see in terminal
 
     if (notification === "OPENWEATHER_ONECALL_DATA") {
-      //	Log.log("received socket");
       // process weather data
       data = payload;
       this.forecast = this.processOnecall(data);
@@ -133,7 +127,7 @@ Module.register("MMM-OneCallWeather", {
     }
   },
 
-  processOnecall() {
+  processOnecall () {
     let precip = false;
     let wsfactor = 1;
     const current = [];
@@ -145,18 +139,14 @@ Module.register("MMM-OneCallWeather", {
       wsfactor = 2.237;
     }
 
-    if (data.hasOwnProperty("current")) {
+    if (Object.hasOwn(data, "current")) {
       const currently = {
         date: moment(data.current.dt, "X").utcOffset(data.timezone_offset / 60),
         dayOfWeek: moment(data.current.dt, "X").format("ddd"),
         windSpeed: (data.current.wind_speed * wsfactor).toFixed(0),
         windDirection: data.current.wind_deg,
-        sunrise: moment(data.current.sunrise, "X").utcOffset(
-          data.timezone_offset / 60
-        ),
-        sunset: moment(data.current.sunset, "X").utcOffset(
-          data.timezone_offset / 60
-        ),
+        sunrise: moment(data.current.sunrise, "X").utcOffset(data.timezone_offset / 60),
+        sunset: moment(data.current.sunset, "X").utcOffset(data.timezone_offset / 60),
         temperature: this.roundValue(data.current.temp),
         weatherIcon: data.current.weather[0].icon,
         weatherType: this.convertWeatherType(data.current.weather[0].icon),
@@ -166,7 +156,7 @@ Module.register("MMM-OneCallWeather", {
       };
       current.push(currently);
     }
-    //			Log.log("current weather is " + JSON.stringify(currently));
+    // Log.log("current weather is " + JSON.stringify(currently));
     let weather = new WeatherObject(
       this.config.units,
       this.config.tempUnits,
@@ -179,10 +169,10 @@ Module.register("MMM-OneCallWeather", {
     this.hourForecast = [];
     let forecastData = [];
 
-    if (data.hasOwnProperty("hourly")) {
+    if (Object.hasOwn(data, "hourly")) {
       for (const hour of data.hourly) {
         if (
-          Object.prototype.hasOwnProperty.call(hour, "rain") &&
+          Object.hasOwn(hour, "rain") &&
           !Number.isNaN(hour.rain["1h"])
         ) {
           if (this.config.units === "imperial") {
@@ -193,7 +183,7 @@ Module.register("MMM-OneCallWeather", {
           precip = true;
         }
         if (
-          Object.prototype.hasOwnProperty.call(hour, "snow") &&
+          Object.hasOwn(hour, "snow") &&
           !Number.isNaN(hour.snow["1h"])
         ) {
           if (this.config.units === "imperial") {
@@ -232,7 +222,7 @@ Module.register("MMM-OneCallWeather", {
     this.dayForecast = [];
 
     const days = [];
-    if (data.hasOwnProperty("daily")) {
+    if (Object.hasOwn(data, "daily")) {
       for (const day of data.daily) {
         precip = false;
         if (!Number.isNaN(day.rain)) {
@@ -261,9 +251,7 @@ Module.register("MMM-OneCallWeather", {
         forecastData = {
           dayOfWeek: moment(day.dt, "X").format("ddd"),
           date: moment(day.dt, "X").utcOffset(data.timezone_offset / 60),
-          sunrise: moment(day.sunrise, "X").utcOffset(
-            data.timezone_offset / 60
-          ),
+          sunrise: moment(day.sunrise, "X").utcOffset(data.timezone_offset / 60),
           sunset: moment(day.sunset, "X").utcOffset(data.timezone_offset / 60),
           minTemperature: this.roundValue(day.temp.min),
           maxTemperature: this.roundValue(day.temp.max),
@@ -286,12 +274,14 @@ Module.register("MMM-OneCallWeather", {
       }
     }
 
-    //			Log.log("forecast is " + JSON.stringify(days));
-    return { current, hours, days };
+    // Log.log("forecast is " + JSON.stringify(days));
+    return {current,
+      hours,
+      days};
   },
 
   // Override getHeader method.
-  getHeader() {
+  getHeader () {
     if (this.config.appendLocationNameToHeader) {
       return `${this.data.header} ${this.fetchedLocationName}`;
     }
@@ -300,7 +290,7 @@ Module.register("MMM-OneCallWeather", {
   },
 
   // Override dom generator.
-  getDom() {
+  getDom () {
     const wrapper = document.createElement("div");
 
     if (this.config.appid === "") {
@@ -356,9 +346,10 @@ Module.register("MMM-OneCallWeather", {
       this.config.decimalSymbol = ".";
     }
 
+    // eslint-disable-next-line default-case
     switch (this.config.layout) {
       case "horizontal":
-        //				Log.log("count of data length " + this.forecast.days.length);
+        // Log.log("count of data length " + this.forecast.days.length);
 
         Log.log(`count of data length ${this.forecast.hours.length}`);
         hRowData = document.createElement("tr");
@@ -368,15 +359,9 @@ Module.register("MMM-OneCallWeather", {
         for (let h = 0; h < this.config.maxHourliesToShow; h += 1) {
           const hourlyForecast = this.forecast.hours[h];
           const lineOfData = document.createElement("div");
-          lineOfData.innerHTML = `${moment(hourlyForecast.date, "X").format(
-            "hhmm"
-          )}&nbsp ${
+          lineOfData.innerHTML = `${moment(hourlyForecast.date, "X").format("hhmm")}&nbsp ${
             hourlyForecast.temperature
-          }${degreeLabel}&nbsp ${hourlyForecast.windSpeed.toFixed(
-            0
-          )}&nbsp ${this.cardinalWindDirection(
-            hourlyForecast.windDirection
-          )}&nbsp ${hourlyForecast.weatherType}<BR>`;
+          }${degreeLabel}&nbsp ${hourlyForecast.windSpeed.toFixed(0)}&nbsp ${this.cardinalWindDirection(hourlyForecast.windDirection)}&nbsp ${hourlyForecast.weatherType}<BR>`;
           hCellData.appendChild(lineOfData);
         }
 
@@ -387,9 +372,7 @@ Module.register("MMM-OneCallWeather", {
             dailyForecast.maxTemperature
           }&nbsp ${dailyForecast.minTemperature}&nbsp ${
             dailyForecast.windSpeed
-          }&nbsp ${this.cardinalWindDirection(
-            dailyForecast.windDirection
-          )}&nbsp ${dailyForecast.weatherType}<BR>`;
+          }&nbsp ${this.cardinalWindDirection(dailyForecast.windDirection)}&nbsp ${dailyForecast.weatherType}<BR>`;
           hCellData.appendChild(lineOfData);
         }
 
@@ -398,10 +381,11 @@ Module.register("MMM-OneCallWeather", {
         break;
 
       case "vertical":
+        // eslint-disable-next-line prefer-destructuring
         currentWeather = this.forecast.current[0];
         currentRow1 = document.createElement("tr");
         currentCell1 = document.createElement("td");
-        //		currentCell.style.columnSpan = "all";
+        // currentCell.style.columnSpan = "all";
         currentCell1.colSpan = "6";
         currentCell1.className = "current";
 
@@ -425,9 +409,7 @@ Module.register("MMM-OneCallWeather", {
               windyDirection.innerHTML = ` &nbsp;<i class="fa fa-long-arrow-down" style="transform:rotate(${this.windDeg}deg);"></i>&nbsp;`;
             }
           } else {
-            windyDirection.innerHTML = ` ${this.cardinalWindDirection(
-              currentWeather.windDirection
-            )}`; // + currentWeather.windDirection;
+            windyDirection.innerHTML = ` ${this.cardinalWindDirection(currentWeather.windDirection)}`; // + currentWeather.windDirection;
           }
           small.appendChild(windyDirection);
         }
@@ -504,12 +486,12 @@ Module.register("MMM-OneCallWeather", {
         table.appendChild(currentRow3);
 
         for (let i = 0; i < this.config.maxDailiesToShow; i += 1) {
-          //				console.log("count of data length " + this.forecast.days.length);
+          // Log.log("count of data length " + this.forecast.days.length);
           dailyForecast = this.forecast.days[i];
 
           const row = document.createElement("tr");
-          //			row.style.borderStyle = "solid";
-          //			row.style.borderColor = "red";
+          // row.style.borderStyle = "solid";
+          // row.style.borderColor = "red";
 
           if (this.config.colored) {
             row.className = "colored";
@@ -538,7 +520,7 @@ Module.register("MMM-OneCallWeather", {
           const maxTempCell = document.createElement("td");
           maxTempCell.innerHTML = dailyForecast.maxTemperature + degreeLabel;
           maxTempCell.className = "align-center bright max-temp";
-          //				maxTempCell.style.paddingRight="10px";
+          // maxTempCell.style.paddingRight="10px";
           row.appendChild(maxTempCell);
 
           const minTempCell = document.createElement("td");
@@ -575,9 +557,7 @@ Module.register("MMM-OneCallWeather", {
             if (Number.isNaN(dailyForecast.precipitation)) {
               rainCell.innerHTML = "";
             } else if (config.units !== "imperial") {
-              rainCell.innerHTML = `${parseFloat(
-                dailyForecast.precipitation
-              ).toFixed(1)} mm`;
+              rainCell.innerHTML = `${parseFloat(dailyForecast.precipitation).toFixed(1)} mm`;
             } else {
               rainCell.innerHTML = `${(
                 parseFloat(dailyForecast.precipitation) / 25.4
@@ -589,10 +569,11 @@ Module.register("MMM-OneCallWeather", {
         }
         break;
       case "default":
+        // eslint-disable-next-line prefer-destructuring
         currentWeather = this.forecast.current[0];
         currentRow1 = document.createElement("tr");
         currentCell1 = document.createElement("td");
-        //		currentCell.style.columnSpan = "all";
+        // currentCell.style.columnSpan = "all";
         currentCell1.colSpan = this.config.maxDailiesToShow;
         currentCell1.className = "current";
 
@@ -621,9 +602,7 @@ Module.register("MMM-OneCallWeather", {
               windyDirection.innerHTML = ` &nbsp;<i class="fa fa-long-arrow-down" style="transform:rotate(${this.windDeg}deg);"></i>&nbsp;`;
             }
           } else {
-            windyDirection.innerHTML = ` ${this.cardinalWindDirection(
-              currentWeather.windDirection
-            )}`; // + currentWeather.windDirection;
+            windyDirection.innerHTML = ` ${this.cardinalWindDirection(currentWeather.windDirection)}`; // + currentWeather.windDirection;
           }
           small.appendChild(windyDirection);
         }
@@ -686,10 +665,10 @@ Module.register("MMM-OneCallWeather", {
           const currFeelsLike = document.createElement("span");
           currFeelsLike.className = "small dimmed";
           currFeelsLike.innerHTML = `Feels Like ${currentWeather.feelsLikeTemp}${degreeLabel}`; // + "<BR>Last update" +  moment(currentWeather.date, "X").format("LT");
-          //					currFeelsLike.style.transform = "translate(0px, -100px)"; //scale(2)
-          //					currFeelsLike.style.border = "solid"; //scale(2)
-          //					currFeelsLike.style.color = "red"; //scale(2)
-          //					currFeelsLike.style.verticalAlign = "top";
+          // currFeelsLike.style.transform = "translate(0px, -100px)"; //scale(2)
+          // currFeelsLike.style.border = "solid"; //scale(2)
+          // currFeelsLike.style.color = "red"; //scale(2)
+          // currFeelsLike.style.verticalAlign = "top";
           small.appendChild(currFeelsLike);
           currentCell1.appendChild(small);
         }
@@ -698,7 +677,7 @@ Module.register("MMM-OneCallWeather", {
         table.appendChild(currentRow3);
 
         for (let j = 0; j < this.config.maxDailiesToShow; j += 1) {
-          //				Log.log("count of data length " + this.forecast.days.length);
+          // Log.log("count of data length " + this.forecast.days.length);
           dailyForecast = this.forecast.days[j];
 
           const row = document.createElement("td");
@@ -729,7 +708,7 @@ Module.register("MMM-OneCallWeather", {
 
           if (
             this.config.decimalSymbol === "" ||
-            this.config.decimalSymbol === " "
+              this.config.decimalSymbol === " "
           ) {
             this.config.decimalSymbol = ".";
           }
@@ -769,7 +748,7 @@ Module.register("MMM-OneCallWeather", {
           const ws = document.createElement("P");
           ws.innerText = dailyForecast.windSpeed;
 
-          //				ws.innerText =  (dailyForecast.windSpeed * 2.237).toFixed(0);
+          // ws.innerText =  (dailyForecast.windSpeed * 2.237).toFixed(0);
           ws.style.color = "black";
           ws.style.position = "relative"; // absolute
           ws.style.top = "-65px";
@@ -783,9 +762,7 @@ Module.register("MMM-OneCallWeather", {
             if (Number.isNaN(dailyForecast.precipitation)) {
               rainCell.innerHTML = "";
             } else if (config.units !== "imperial") {
-              rainCell.innerHTML = `${parseFloat(
-                dailyForecast.precipitation
-              ).toFixed(1)} mm`;
+              rainCell.innerHTML = `${parseFloat(dailyForecast.precipitation).toFixed(1)} mm`;
             } else {
               rainCell.innerHTML = `${(
                 parseFloat(dailyForecast.precipitation) / 25.4
@@ -801,11 +778,11 @@ Module.register("MMM-OneCallWeather", {
     return table;
   },
 
-  getOrdinal(bearing) {
-    return this.config.label_ordinals[Math.round((bearing * 16) / 360) % 16];
+  getOrdinal (bearing) {
+    return this.config.labelOrdinals[Math.round(bearing * 16 / 360) % 16];
   },
 
-  cardinalWindDirection(windDir) {
+  cardinalWindDirection (windDir) {
     if (windDir > 11.25 && windDir <= 33.75) {
       return "NNE";
     }
@@ -854,7 +831,7 @@ Module.register("MMM-OneCallWeather", {
     return "N";
   },
 
-  convertOpenWeatherIdToIcon(id, openweatherIcon) {
+  convertOpenWeatherIdToIcon (id, openweatherIcon) {
     if (id >= 200 && id < 300) {
       // Thunderstorm
       return "thunderstorm";
@@ -912,15 +889,17 @@ Module.register("MMM-OneCallWeather", {
     return false;
   },
 
-  roundValue(temperature) {
-    const decimals = this.config.roundTemp ? 0 : 1;
+  roundValue (temperature) {
+    const decimals = this.config.roundTemp
+      ? 0
+      : 1;
     return parseFloat(temperature).toFixed(decimals);
   },
 
   /*
    * Convert the OpenWeatherMap icons to a more usable name.
    */
-  convertWeatherType(weatherType) {
+  convertWeatherType (weatherType) {
     const weatherTypes = {
       "01d": "day-sunny",
       "02d": "day-few-cloudy",
@@ -942,11 +921,12 @@ Module.register("MMM-OneCallWeather", {
       "50n": "night-fog"
     };
 
-    return weatherTypes.hasOwnProperty(weatherType)
+    return Object.hasOwn(weatherTypes, weatherType)
       ? weatherTypes[weatherType]
       : null;
   },
-  /* ms2Beaufort(ms)
+  /*
+   * ms2Beaufort(ms)
    * Converts m2 to beaufort (windspeed).
    *
    * see:
@@ -957,7 +937,7 @@ Module.register("MMM-OneCallWeather", {
    *
    * return number - Windspeed in beaufort.
    */
-  mph2Beaufort(mph) {
+  mph2Beaufort (mph) {
     const kmh = mph * 1.60934;
     const speeds = [1, 5, 11, 19, 28, 38, 49, 61, 74, 88, 102, 117, 1000];
     for (const beaufort of speeds) {

@@ -1,11 +1,3 @@
 {
-  "trailingComma": "none",
-  "overrides": [
-    {
-      "files": "*.md",
-      "options": {
-        "parser": "markdown"
-      }
-    }
-  ]
+  "trailingComma": "none"
 }
