@@ -22,23 +22,20 @@ const Log = require("logger");
 const moment = require("moment");
 
 module.exports = NodeHelper.create({
-  start () {
-    // Log.log("====================== Starting node_helper for module [" + this.name + "]");
-  },
 
   socketNotificationReceived (notification, config) {
     if (notification === "OPENWEATHER_ONECALL_GET") {
       const self = this;
-      Log.log("node received");
+      Log.debug("[MMM-OneCallWeather] node received");
       if (config.apikey === null || config.apikey === "") {
-        Log.log(`[MMM-OneCallWeather] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** No API key configured. Get an API key at https://openweathermap.org/api/one-call-api`);
+        Log.debug(`[MMM-OneCallWeather] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** No API key configured. Get an API key at https://openweathermap.org/api/one-call-api`);
       } else if (
         config.latitude === null ||
         config.latitude === "" ||
         config.longitude === null ||
         config.longitude === ""
       ) {
-        Log.log(`[MMM-OneCallWeather] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** Latitude and/or longitude not provided.`);
+        Log.debug(`[MMM-OneCallWeather] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** Latitude and/or longitude not provided.`);
       } else {
         const myurl =
           `https://api.openweathermap.org/data/${config.apiVersion}/onecall` +
@@ -61,13 +58,13 @@ module.exports = NodeHelper.create({
           })
           .then((data) => {
             // handle success
-            // Log.log("got request loop " + myurl);   // uncomment to see in terminal
+            // Log.debug("got request loop " + myurl);   // uncomment to see in terminal
             self.sendSocketNotification("OPENWEATHER_ONECALL_DATA", data);
-            // Log.log("sent the data back" );
+            // Log.debug("sent the data back" );
           })
           .catch((error) => {
             // handle error
-            Log.log(`[MMM-OneCallWeather] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${error}`);
+            Log.error(`[MMM-OneCallWeather] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${error}`);
           });
       }
     }

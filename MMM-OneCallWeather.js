@@ -76,6 +76,11 @@ Module.register("MMM-OneCallWeather", {
     return ["moment.js", "weatherobject.js"];
   },
 
+  // Define required CSS files.
+  getStyles () {
+    return ["MMM-OneCallWeather.css"];
+  },
+
   // Define start sequence.
   start () {
     Log.info(`Starting module: ${this.name}`);
@@ -112,10 +117,10 @@ Module.register("MMM-OneCallWeather", {
       requestDelay: this.config.requestDelay
     });
   },
-  // Log.log("node received");
+  // Log.debug("node received");
 
   socketNotificationReceived (notification, payload) {
-    // Log.log("got some data back" );    // uncomment to see in terminal
+    // Log.debug("got some data back");
 
     if (notification === "OPENWEATHER_ONECALL_DATA") {
       // process weather data
@@ -156,7 +161,7 @@ Module.register("MMM-OneCallWeather", {
       };
       current.push(currently);
     }
-    // Log.log("current weather is " + JSON.stringify(currently));
+    // Log.debug("current weather is " + JSON.stringify(currently));
     let weather = new WeatherObject(
       this.config.units,
       this.config.tempUnits,
@@ -274,7 +279,7 @@ Module.register("MMM-OneCallWeather", {
       }
     }
 
-    // Log.log("forecast is " + JSON.stringify(days));
+    // Log.debug("forecast is " + JSON.stringify(days));
     return {current,
       hours,
       days};
@@ -349,9 +354,8 @@ Module.register("MMM-OneCallWeather", {
     // eslint-disable-next-line default-case
     switch (this.config.layout) {
       case "horizontal":
-        // Log.log("count of data length " + this.forecast.days.length);
-
-        Log.log(`count of data length ${this.forecast.hours.length}`);
+        Log.debug(`count of data length ${this.forecast.days.length}`);
+        Log.debug(`count of data length ${this.forecast.hours.length}`);
         hRowData = document.createElement("tr");
         hCellData = document.createElement("td");
         hCellData.style.textAlign = "left";
@@ -486,7 +490,7 @@ Module.register("MMM-OneCallWeather", {
         table.appendChild(currentRow3);
 
         for (let i = 0; i < this.config.maxDailiesToShow; i += 1) {
-          // Log.log("count of data length " + this.forecast.days.length);
+          // Log.debug("count of data length " + this.forecast.days.length);
           dailyForecast = this.forecast.days[i];
 
           const row = document.createElement("tr");
@@ -677,7 +681,7 @@ Module.register("MMM-OneCallWeather", {
         table.appendChild(currentRow3);
 
         for (let j = 0; j < this.config.maxDailiesToShow; j += 1) {
-          // Log.log("count of data length " + this.forecast.days.length);
+          // Log.debug("count of data length " + this.forecast.days.length);
           dailyForecast = this.forecast.days[j];
 
           const row = document.createElement("td");
@@ -751,7 +755,7 @@ Module.register("MMM-OneCallWeather", {
           // ws.innerText =  (dailyForecast.windSpeed * 2.237).toFixed(0);
           ws.style.color = "black";
           ws.style.position = "relative"; // absolute
-          ws.style.top = "-65px";
+          ws.style.top = "-55px";
           ws.style.left = "6px";
           ws.style.textAlign = "center";
           windTextCell.appendChild(ws);

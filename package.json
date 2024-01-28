@@ -1,17 +1,15 @@
 {
   "name": "mmm-onecallweather",
-  "version": "2.1.1",
-  "description": "Weather module for MagicMirror² using openweathermap.org \"One Call\" API",
+  "version": "2.2.1",
+  "description": "Weather module for MagicMirror² using openweathermap.org One Call API",
   "repository": {
     "type": "git",
     "url": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather"
   },
   "keywords": [
-    "magic mirror",
-    "magic mirror 2",
-    "smart mirror",
+    "MagicMirror",
     "weather",
-    "module"
+    "openweathermap"
   ],
   "author": "Captsi",
   "contributors": [
