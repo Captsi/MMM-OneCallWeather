@@ -81,6 +81,14 @@ Module.register("MMM-OneCallWeather", {
     return ["MMM-OneCallWeather.css"];
   },
 
+  getTranslations () {
+    return {
+      de: "translations/de.json",
+      en: "translations/en.json",
+      fr: "translations/fr.json"
+    };
+  },
+
   // Define start sequence.
   start () {
     Log.info(`Starting module: ${this.name}`);
@@ -479,7 +487,7 @@ Module.register("MMM-OneCallWeather", {
               32
             ).toFixed(0)}${degreeLabel}`;
           } else {
-            currFeelsLike.innerHTML = `Feels Like ${currentWeather.feelsLikeTemp}${degreeLabel}`;
+            currFeelsLike.innerHTML = `${this.translate("FEELS_LIKE")} ${currentWeather.feelsLikeTemp}${degreeLabel}`;
           }
           small.appendChild(currFeelsLike);
           currentCell1.appendChild(small);
@@ -668,7 +676,7 @@ Module.register("MMM-OneCallWeather", {
           small.className = "small dimmed";
           const currFeelsLike = document.createElement("span");
           currFeelsLike.className = "small dimmed";
-          currFeelsLike.innerHTML = `Feels Like ${currentWeather.feelsLikeTemp}${degreeLabel}`; // + "<BR>Last update" +  moment(currentWeather.date, "X").format("LT");
+          currFeelsLike.innerHTML = `${this.translate("FEELS_LIKE")} ${currentWeather.feelsLikeTemp}${degreeLabel}`; // + "<BR>Last update" +  moment(currentWeather.date, "X").format("LT");
           // currFeelsLike.style.transform = "translate(0px, -100px)"; //scale(2)
           // currFeelsLike.style.border = "solid"; //scale(2)
           // currFeelsLike.style.color = "red"; //scale(2)
@@ -929,6 +937,7 @@ Module.register("MMM-OneCallWeather", {
       ? weatherTypes[weatherType]
       : null;
   },
+
   /*
    * ms2Beaufort(ms)
    * Converts m2 to beaufort (windspeed).
