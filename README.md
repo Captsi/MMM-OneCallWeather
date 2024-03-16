@@ -32,7 +32,7 @@ Install the dependencies:
 
 ```sh
 cd MMM-OneCallWeather
-npm install
+npm ci
 ```
 
 Go to <https://openweathermap.org/api> and subscribe to One Call API. Its free to set up an account, and the free subscription level is fine for this app. The API returns a lot of information and can return 1000 calls a day on the free subscription level (approx once every 2 minutes maximum). The API is good as it uses their algorithms to give ultra local weather reports, even if you don't live in a named location, which some other apps suffer with.
@@ -52,7 +52,7 @@ Note: You can use any of your own icons but you will have to rename them to the 
 
 This module displays the weather forecast for the coming week, including an an icon to display the current conditions, the minimum temperature and the maximum temperature. The software is designed around a display in Celsius and miles per hour, but should work in a multitude of units. I found that the openweathermap information is a bit crude in that you cant have Farenheight and metres per second, or celsius and miles per hour, hence this code. Its a bit clunky.
 
-## Using the module
+## Configuration
 
 To use this module, add it to the modules array in the `config/config.js` file:
 
@@ -72,7 +72,7 @@ modules: [
 ];
 ```
 
-## Configuration options
+### Configuration options
 
 The following properties can be configured:
 
@@ -97,6 +97,16 @@ The following properties can be configured:
 | `appendLocationNameToHeader` | If set to `true`, the returned location name will be appended to the header of the module, if the header is enabled. This is mainly intresting when using calender based weather. <br><br> **Default value:** `true`                                                                                                                                                            |
 | `tableClass`                 | Name of the classes issued from `main.css`. <br><br> **Possible values:** xsmall, small, medium, large, xlarge. <br> **Default value:** _small._                                                                                                                                                                                                                                |
 | `colored`                    | If set 'colored' to true the min-temp get a blue tone and the max-temp get a red tone. <br><br> **Default value:** `true`                                                                                                                                                                                                                                                       |
+
+## Update
+
+Go to the module’s folder inside MagicMirror modules folder and pull the latest version from GitHub and install:
+
+```bash
+cd ~/MagicMirror/modules/MMM-PublicTransportHafas
+git pull
+npm ci
+```
 
 ## Special Thanks
 
