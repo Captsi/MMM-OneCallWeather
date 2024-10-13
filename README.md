@@ -57,19 +57,16 @@ This module displays the weather forecast for the coming week, including an an i
 To use this module, add it to the modules array in the `config/config.js` file:
 
 ```javascript
-modules: [
   {
     module: "MMM-OneCallWeather",
-    position: "top_right", // This can be any of the regions.
+    position: "top_right",
     // Best results in bottom_bar region due to horizontal default layout and icon sizes.
     config: {
-      // See 'Configuration options' for more information.
       latitude: "51.500149", // Longitude from https://www.latlong.net/
       longitude: "-0.126240", // Longitude from https://www.latlong.net/ - is West + is East of London
-      apikey: "YOUR_API_KEY" // openweathermap.org API key.
+      apikey: "YOUR_API_KEY" // openweathermap.org API key
     }
-  }
-];
+  },
 ```
 
 ### Configuration options

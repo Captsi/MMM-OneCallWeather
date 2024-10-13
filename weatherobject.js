@@ -63,9 +63,9 @@ class WeatherObject {
 
     if (windInMph > 3 && tempInF < 50) {
       feelsLike = Math.round(35.74 +
-      0.6215 * tempInF -
-      35.75 * windInMph ** 0.16 +
-      0.4275 * tempInF * windInMph ** 0.16);
+        0.6215 * tempInF -
+        35.75 * windInMph ** 0.16 +
+        0.4275 * tempInF * windInMph ** 0.16);
     } else if (tempInF > 80 && this.humidity > 40) {
       feelsLike =
         -42.379 +

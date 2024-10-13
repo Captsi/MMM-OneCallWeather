@@ -1,7 +1,7 @@
 /*
  * Node Helper for MMM-OneCallWeather.
  *
- * This helper is responsible for the DarkSky-compatible data pull from OpenWeather.
+ * This helper is responsible for the data pull from OpenWeather.
  * At a minimum the API key, Latitude and Longitude parameters
  * must be provided.  If any of these are missing, the request
  * to OpenWeather will not be executed, and instead an error
@@ -11,7 +11,6 @@
  *
  *  units - one of "metric", "imperial", or "" (blank)
  *  lang - Any of the languages OpenWeather supports, as listed here: https://openweathermap.org/api/one-call-api#multi
- *
  */
 
 const NodeHelper = require("node_helper");
@@ -55,9 +54,9 @@ module.exports = NodeHelper.create({
           })
           .then((data) => {
             // handle success
-            // Log.debug("got request loop " + myurl);   // uncomment to see in terminal
+            Log.debug(`[MMM-OneCallWeather] got request loop ${myurl}`);
             self.sendSocketNotification("OPENWEATHER_ONECALL_DATA", data);
-            // Log.debug("sent the data back" );
+            Log.debug("[MMM-OneCallWeather] sent the data back");
           })
           .catch((error) => {
             // handle error

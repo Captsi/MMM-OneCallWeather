@@ -142,14 +142,12 @@ Module.register("MMM-OneCallWeather", {
 
   processOnecall () {
     let precip = false;
-    let wsfactor = 1;
+    let wsfactor = 2.237;
     const current = [];
     if (this.config.windUnits === "kmph") {
       wsfactor = 3.6;
     } else if (this.config.windUnits === "ms") {
       wsfactor = 1;
-    } else {
-      wsfactor = 2.237;
     }
 
     if (Object.hasOwn(data, "current")) {
@@ -180,7 +178,7 @@ Module.register("MMM-OneCallWeather", {
     // get hourly weather, if requested
     const hours = [];
     this.hourForecast = [];
-    let forecastData = [];
+    let forecastData;
 
     if (Object.hasOwn(data, "hourly")) {
       for (const hour of data.hourly) {
@@ -502,8 +500,6 @@ Module.register("MMM-OneCallWeather", {
           dailyForecast = this.forecast.days[i];
 
           const row = document.createElement("tr");
-          // row.style.borderStyle = "solid";
-          // row.style.borderColor = "red";
 
           if (this.config.colored) {
             row.className = "colored";
@@ -677,10 +673,7 @@ Module.register("MMM-OneCallWeather", {
           const currFeelsLike = document.createElement("span");
           currFeelsLike.className = "small dimmed";
           currFeelsLike.innerHTML = `${this.translate("FEELS_LIKE")} ${currentWeather.feelsLikeTemp}${degreeLabel}`; // + "<BR>Last update" +  moment(currentWeather.date, "X").format("LT");
-          // currFeelsLike.style.transform = "translate(0px, -100px)"; //scale(2)
-          // currFeelsLike.style.border = "solid"; //scale(2)
-          // currFeelsLike.style.color = "red"; //scale(2)
-          // currFeelsLike.style.verticalAlign = "top";
+
           small.appendChild(currFeelsLike);
           currentCell1.appendChild(small);
         }
@@ -720,7 +713,7 @@ Module.register("MMM-OneCallWeather", {
 
           if (
             this.config.decimalSymbol === "" ||
-              this.config.decimalSymbol === " "
+            this.config.decimalSymbol === " "
           ) {
             this.config.decimalSymbol = ".";
           }
