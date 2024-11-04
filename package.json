@@ -2,7 +2,11 @@
   "name": "mmm-onecallweather",
   "version": "2.2.1",
   "description": "Weather module for MagicMirror² using openweathermap.org One Call API",
-  "repository": "KristjanESPERANTO/MMM-OneCallWeather",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git"
+  },
+  "main": "MMM-OneCallWeather.js",
   "keywords": [
     "MagicMirror",
     "weather",
@@ -22,9 +26,9 @@
     "moment": "^2.30.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@stylistic/eslint-plugin": "^2.9.0",
-    "eslint": "^9.13.0",
+    "@eslint/js": "^9.14.0",
+    "@stylistic/eslint-plugin": "^2.10.1",
+    "eslint": "^9.14.0",
     "eslint-plugin-import": "^2.31.0",
     "globals": "latest",
     "markdownlint-cli": "^0.42.0",
