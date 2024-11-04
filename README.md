@@ -12,7 +12,7 @@ Since the original author of the module, [Captsi](https://github.com/Captsi), is
 
 ## Screenshot
 
-![Example: Default layout](OneCallWeather-Screenshot.png)<br>_Typical view of weather_
+![Example: Default layout](screenshot.png)<br>_Typical view of weather_
 
 ## Installation
 
