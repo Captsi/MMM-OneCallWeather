@@ -33,7 +33,7 @@ module.exports = NodeHelper.create({
       ) {
         Log.debug(`[MMM-OneCallWeather] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** Latitude and/or longitude not provided.`);
       } else {
-        const myurl =
+        const myUrl =
           `https://api.openweathermap.org/data/${config.apiVersion}/onecall` +
           `?lat=${config.latitude}&lon=${config.longitude}${
             config.units === ""
@@ -43,9 +43,9 @@ module.exports = NodeHelper.create({
             config.language
           }`;
 
-        // make request to OpenWeather onecall API
+        // make request to OpenWeather One Call API
 
-        fetch(myurl)
+        fetch(myUrl)
           .then((response) => {
             if (response.status === 200) {
               return response.json();
@@ -54,7 +54,7 @@ module.exports = NodeHelper.create({
           })
           .then((data) => {
             // handle success
-            Log.debug(`[MMM-OneCallWeather] got request loop ${myurl}`);
+            Log.debug(`[MMM-OneCallWeather] got request loop ${myUrl}`);
             self.sendSocketNotification("OPENWEATHER_ONECALL_DATA", data);
             Log.debug("[MMM-OneCallWeather] sent the data back");
           })

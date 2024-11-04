@@ -1,27 +1,19 @@
-/*
- * MagicMirror²
- * Module: MMM-OneCallWeather
- *
- * By Simon Cowdell
- */
-
 let data;
 
 Module.register("MMM-OneCallWeather", {
-  // Default module config.
   defaults: {
     latitude: false,
     longitude: false,
     apikey: "",
     apiVersion: "3.0",
     units: config.units,
-    layout: "default", // default
+    layout: "default",
     showRainAmount: false,
     showWind: true,
     showWindDirection: true,
     showFeelsLike: true,
     tempUnits: "c",
-    windunits: "mph",
+    windUnits: "mph",
     useBeaufortInCurrent: false,
 
     initialLoadDelay: 2500, // 2.5 seconds delay. This delay is used to keep the OpenWeather API happy.
@@ -68,7 +60,7 @@ Module.register("MMM-OneCallWeather", {
     moduleTimestampIdPrefix: "OPENWEATHER_ONE_CALL_TIMESTAMP_"
   },
 
-  // create a variable for the first upcoming calendaar event. Used if no location is specified.
+  // create a variable for the first upcoming calendar event. Used if no location is specified.
   firstEvent: false,
 
   // Define required scripts.
