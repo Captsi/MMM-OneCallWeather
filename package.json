@@ -1,0 +1,44 @@
+{
+  "name": "mmm-onecallweather",
+  "version": "2.2.2",
+  "description": "Weather module for MagicMirror² using openweathermap.org One Call API",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git"
+  },
+  "main": "MMM-OneCallWeather.js",
+  "keywords": [
+    "MagicMirror",
+    "weather",
+    "openweathermap"
+  ],
+  "author": "Captsi",
+  "contributors": [
+    "https://github.com/Captsi/MMM-OneCallWeather/graphs/contributors",
+    "https://github.com/KristjanESPERANTO/MMM-OneCallWeather/graphs/contributors"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather/issues"
+  },
+  "homepage": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather#readme",
+  "dependencies": {
+    "moment": "^2.30.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "@stylistic/eslint-plugin": "^2.10.1",
+    "cspell": "^8.15.7",
+    "eslint": "^9.14.0",
+    "eslint-plugin-import": "^2.31.0",
+    "globals": "^15.12.0",
+    "markdownlint-cli": "^0.42.0",
+    "prettier": "^3.3.3"
+  },
+  "scripts": {
+    "lint": "eslint . && markdownlint . --ignore node_modules && prettier --check .",
+    "lint:fix": "eslint . --fix && markdownlint . --ignore node_modules --fix && prettier --write .",
+    "test": "npm run lint && npm run test:spelling",
+    "test:spelling": "cspell ."
+  }
+}
