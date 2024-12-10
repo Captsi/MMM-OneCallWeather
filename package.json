@@ -2,26 +2,33 @@
   "name": "mmm-onecallweather",
   "version": "2.2.2",
   "description": "Weather module for MagicMirror² using openweathermap.org One Call API",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git"
-  },
-  "main": "MMM-OneCallWeather.js",
   "keywords": [
     "MagicMirror",
     "weather",
     "openweathermap"
   ],
+  "homepage": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather#readme",
+  "bugs": {
+    "url": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather"
+  },
+  "license": "MIT",
   "author": "Captsi",
   "contributors": [
     "https://github.com/Captsi/MMM-OneCallWeather/graphs/contributors",
     "https://github.com/KristjanESPERANTO/MMM-OneCallWeather/graphs/contributors"
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather/issues"
+  "main": "MMM-OneCallWeather.js",
+  "scripts": {
+    "lint": "eslint . && markdownlint . --ignore node_modules && prettier --check .",
+    "lint:fix": "eslint . --fix && markdownlint . --ignore node_modules --fix && prettier --write .",
+    "release": "npx bumpp --no-push",
+    "test": "npm run lint && npm run test:spelling",
+    "test:spelling": "cspell ."
   },
-  "homepage": "https://github.com/KristjanESPERANTO/MMM-OneCallWeather#readme",
   "dependencies": {
     "moment": "^2.30.1"
   },
@@ -34,12 +41,5 @@
     "globals": "^15.13.0",
     "markdownlint-cli": "^0.43.0",
     "prettier": "^3.4.2"
-  },
-  "scripts": {
-    "lint": "eslint . && markdownlint . --ignore node_modules && prettier --check .",
-    "lint:fix": "eslint . --fix && markdownlint . --ignore node_modules --fix && prettier --write .",
-    "release": "npx bumpp --no-push",
-    "test": "npm run lint && npm run test:spelling",
-    "test:spelling": "cspell ."
   }
 }
